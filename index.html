@@ -1,12 +1,21 @@
-<!DOCTYPE html>
+<!DOCTYPE html
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Football Live Scores</title>
 
+
 <style>
+
+/* =========================
+   BASIC
+========================= */
 
 *{
     box-sizing:border-box;
@@ -17,59 +26,97 @@
 body{
     font-family:Arial,Helvetica,sans-serif;
     background:#f4f6f9;
-    color:#18212f;
+    color:#17202a;
     padding-bottom:40px;
 }
 
-/* HEADER */
+
+/* =========================
+   HEADER
+========================= */
 
 .header{
-    background:linear-gradient(135deg,#071d49,#075cff);
+
+    background:
+    linear-gradient(
+        135deg,
+        #061b45,
+        #075cff
+    );
+
     color:white;
+
     padding:25px 18px 28px;
-    border-radius:0 0 28px 28px;
+
+    border-radius:
+    0 0 28px 28px;
 }
 
 .header h1{
+
     font-size:28px;
+
     margin-bottom:7px;
 }
 
 .header p{
+
     font-size:14px;
+
     opacity:.85;
 }
 
+
 .refresh-row{
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
+
     margin-top:22px;
 }
 
 #lastUpdate{
+
     font-size:13px;
+
     opacity:.9;
 }
 
 .refresh-btn{
-    background:white;
-    color:#075cff;
+
     border:0;
+
+    background:white;
+
+    color:#075cff;
+
     padding:12px 18px;
+
     border-radius:25px;
+
     font-size:15px;
+
     font-weight:bold;
-    cursor:pointer;
 }
 
-/* TABS */
+
+/* =========================
+   TABS
+========================= */
 
 .tabs{
+
     display:flex;
+
     gap:10px;
+
     overflow-x:auto;
+
     padding:18px 15px 12px;
+
     scrollbar-width:none;
 }
 
@@ -78,194 +125,314 @@ body{
 }
 
 .tab{
+
     flex:none;
+
     border:0;
+
     background:white;
+
     color:#555;
+
     padding:12px 22px;
+
     border-radius:25px;
+
     font-size:15px;
+
     font-weight:bold;
-    box-shadow:0 2px 8px rgba(0,0,0,.05);
+
+    box-shadow:
+    0 2px 8px rgba(0,0,0,.05);
 }
 
 .tab.active{
+
     background:#075cff;
+
     color:white;
 }
 
-/* SEARCH */
 
-.search{
-    padding:5px 15px 15px;
-}
-
-.search input{
-    width:100%;
-    border:0;
-    outline:0;
-    background:white;
-    padding:16px 20px;
-    border-radius:30px;
-    font-size:16px;
-    box-shadow:0 3px 12px rgba(0,0,0,.06);
-}
-
-/* LOADING */
+/* =========================
+   LOADING
+========================= */
 
 .loading{
+
     text-align:center;
-    padding:45px 20px;
+
+    padding:50px 20px;
+
     color:#777;
 }
 
 .spinner{
+
     width:40px;
+
     height:40px;
-    border:4px solid #ddd;
-    border-top:4px solid #075cff;
+
+    border:
+    4px solid #ddd;
+
+    border-top:
+    4px solid #075cff;
+
     border-radius:50%;
-    margin:0 auto 15px;
-    animation:spin 1s linear infinite;
+
+    margin:
+    0 auto 15px;
+
+    animation:
+    spin 1s linear infinite;
 }
 
 @keyframes spin{
+
     to{
         transform:rotate(360deg);
     }
+
 }
 
-/* ERROR */
+
+/* =========================
+   ERROR
+========================= */
 
 #error{
+
     display:none;
+
     margin:10px 15px;
+
     padding:15px;
+
     border-radius:14px;
-    background:#ffe8e8;
+
+    background:#ffe7e7;
+
     color:#c62828;
+
     font-size:14px;
+
+    word-break:break-word;
 }
 
-/* SECTION */
+
+/* =========================
+   SECTION TITLE
+========================= */
 
 .section-title{
-    padding:5px 16px 8px;
+
+    padding:
+    8px 16px 10px;
+
     font-size:19px;
+
     font-weight:bold;
 }
 
-/* MATCH CARD */
+
+/* =========================
+   MATCH
+========================= */
 
 .match{
+
     background:white;
-    margin:10px 15px;
+
+    margin:
+    10px 15px;
+
     border-radius:18px;
+
     padding:15px;
-    box-shadow:0 3px 15px rgba(0,0,0,.06);
+
+    box-shadow:
+    0 3px 15px rgba(0,0,0,.06);
 }
 
+
+/* =========================
+   LEAGUE
+========================= */
+
 .league{
+
     display:flex;
+
     align-items:center;
+
     gap:8px;
-    border-bottom:1px solid #eee;
+
     padding-bottom:12px;
+
     margin-bottom:14px;
+
+    border-bottom:
+    1px solid #eee;
 }
 
 .league-logo{
+
     width:28px;
+
     height:28px;
+
     object-fit:contain;
 }
 
 .league-name{
+
     font-size:12px;
+
     color:#777;
+
     font-weight:bold;
 }
 
+
+/* =========================
+   TEAMS
+========================= */
+
 .match-row{
+
     display:grid;
-    grid-template-columns:1fr 80px 1fr;
+
+    grid-template-columns:
+    1fr 80px 1fr;
+
     align-items:center;
+
     text-align:center;
 }
 
 .team{
+
     font-size:13px;
+
     font-weight:bold;
+
     line-height:1.3;
 }
 
 .team-logo{
+
     display:block;
+
     width:45px;
+
     height:45px;
+
     object-fit:contain;
-    margin:0 auto 8px;
+
+    margin:
+    0 auto 8px;
 }
+
+
+/* =========================
+   SCORE
+========================= */
 
 .score{
+
     font-size:23px;
+
     font-weight:bold;
 }
 
-.match-status{
+.status{
+
     margin-top:6px;
+
     font-size:11px;
+
     font-weight:bold;
+
     color:#777;
 }
 
-.live-status{
+.live{
+
     color:#e53935;
 }
 
 .live-dot{
+
     display:inline-block;
+
     width:8px;
+
     height:8px;
+
     background:#e53935;
+
     border-radius:50%;
+
     margin-right:4px;
 }
 
-/* EMPTY */
+
+/* =========================
+   EMPTY
+========================= */
 
 .empty{
+
     text-align:center;
-    padding:60px 20px;
+
+    padding:65px 20px;
+
     color:#777;
 }
 
 .empty-ball{
+
     font-size:55px;
+
     margin-bottom:12px;
 }
 
-/* FOOTER */
+
+/* =========================
+   FOOTER
+========================= */
 
 .footer{
+
     text-align:center;
+
     color:#999;
+
     font-size:12px;
-    margin-top:25px;
+
+    margin-top:30px;
 }
 
 </style>
+
 </head>
+
 
 <body>
 
-<!-- HEADER -->
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <div class="header">
 
     <h1>⚽ Football Live</h1>
 
-    <p>Live scores from around the world</p>
+    <p>
+        Live scores from around the world
+    </p>
 
     <div class="refresh-row">
 
@@ -273,8 +440,12 @@ body{
             Connecting...
         </span>
 
-        <button class="refresh-btn" onclick="loadMatches()">
+        <button
+            class="refresh-btn"
+            onclick="loadAll()">
+
             ↻ Refresh
+
         </button>
 
     </div>
@@ -282,55 +453,67 @@ body{
 </div>
 
 
-<!-- TABS -->
+
+<!-- =========================
+     TABS
+========================= -->
 
 <div class="tabs">
 
-    <button class="tab active"
-            onclick="changeTab('live',this)">
+    <button
+        class="tab active"
+        onclick="changeTab('live',this)">
+
         🔴 Live
+
     </button>
 
-    <button class="tab"
-            onclick="changeTab('today',this)">
-        Today
+
+    <button
+        class="tab"
+        onclick="changeTab('today',this)">
+
+        📅 Today
+
     </button>
 
-    <button class="tab"
-            onclick="changeTab('finished',this)">
-        Finished
+
+    <button
+        class="tab"
+        onclick="changeTab('finished',this)">
+
+        ✅ Finished
+
     </button>
 
-    <button class="tab"
-            onclick="changeTab('upcoming',this)">
-        Upcoming
+
+    <button
+        class="tab"
+        onclick="changeTab('upcoming',this)">
+
+        🕐 Upcoming
+
     </button>
 
 </div>
 
 
-<!-- SEARCH -->
 
-<div class="search">
-
-    <input
-        type="text"
-        id="search"
-        placeholder="Search team..."
-        oninput="displayMatches()"
-    >
-
-</div>
-
-
-<!-- ERROR -->
+<!-- =========================
+     ERROR
+========================= -->
 
 <div id="error"></div>
 
 
-<!-- LOADING -->
 
-<div id="loading" class="loading">
+<!-- =========================
+     LOADING
+========================= -->
+
+<div
+    id="loading"
+    class="loading">
 
     <div class="spinner"></div>
 
@@ -339,190 +522,298 @@ body{
 </div>
 
 
-<!-- MATCHES -->
+
+<!-- =========================
+     MATCHES
+========================= -->
 
 <div id="matches"></div>
 
 
+
 <div class="footer">
+
     Football Live Scores
+
 </div>
+
 
 
 <script>
 
-/* =========================================================
-   🔑 PUT YOUR API KEY HERE
-   ========================================================= */
 
-const API_KEY = "361e4f7ff57c7a637472fd45f194a525";
+/* =====================================================
+   🔑 YOUR API KEY
+   ===================================================== */
 
-
-/* =========================================================
-   API URL
-   ========================================================= */
-
-const API_URL = "https://v3.football.api-sports.io";
+const API_KEY =
+"361e4f7ff57c7a637472fd45f194a525";
 
 
-/* =========================================================
+/* =====================================================
+   API
+   ===================================================== */
+
+const API_URL =
+"https://v3.football.api-sports.io";
+
+
+/* =====================================================
    VARIABLES
-   ========================================================= */
+   ===================================================== */
 
-let allMatches = [];
+let liveMatches = [];
+
+let todayMatches = [];
+
+let tomorrowMatches = [];
 
 let currentTab = "live";
 
 
-/* =========================================================
-   GET TODAY'S DATE
-   ========================================================= */
+/* =====================================================
+   DATE FUNCTION
+   ===================================================== */
 
-function getToday(){
+function getDate(offset = 0){
 
-    const today = new Date();
+    const date = new Date();
 
-    const year = today.getFullYear();
+    date.setDate(
+        date.getDate() + offset
+    );
+
+    const year =
+        date.getFullYear();
 
     const month =
-        String(today.getMonth() + 1).padStart(2,"0");
+        String(
+            date.getMonth() + 1
+        ).padStart(2,"0");
 
     const day =
-        String(today.getDate()).padStart(2,"0");
+        String(
+            date.getDate()
+        ).padStart(2,"0");
 
-    return year + "-" + month + "-" + day;
+    return (
+        year +
+        "-" +
+        month +
+        "-" +
+        day
+    );
 }
 
 
-/* =========================================================
-   LOAD MATCHES
-   ========================================================= */
+/* =====================================================
+   API REQUEST
+   ===================================================== */
 
-async function loadMatches(){
+async function apiRequest(endpoint){
+
+    const response =
+        await fetch(
+            API_URL + endpoint,
+            {
+                method:"GET",
+
+                headers:{
+                    "x-apisports-key":
+                    API_KEY
+                }
+            }
+        );
+
+
+    if(!response.ok){
+
+        throw new Error(
+            "HTTP " +
+            response.status
+        );
+
+    }
+
+
+    const data =
+        await response.json();
+
+
+    console.log(
+        "API:",
+        endpoint,
+        data
+    );
+
+
+    if(
+        data.errors &&
+        Object.keys(data.errors).length > 0
+    ){
+
+        throw new Error(
+            JSON.stringify(
+                data.errors
+            )
+        );
+
+    }
+
+
+    return data.response || [];
+
+}
+
+
+/* =====================================================
+   LOAD EVERYTHING
+===================================================== */
+
+async function loadAll(){
 
     const loading =
-        document.getElementById("loading");
+        document.getElementById(
+            "loading"
+        );
 
     const error =
-        document.getElementById("error");
+        document.getElementById(
+            "error"
+        );
 
-    loading.style.display = "block";
 
-    error.style.display = "none";
+    loading.style.display =
+        "block";
 
-    document.getElementById("matches").innerHTML = "";
+    error.style.display =
+        "none";
+
+
+    document.getElementById(
+        "matches"
+    ).innerHTML = "";
 
 
     /* CHECK API KEY */
 
     if(
-        API_KEY === "PASTE_YOUR_API_KEY_HERE" ||
-        API_KEY.trim() === ""
+        !API_KEY ||
+        API_KEY ===
+        "PASTE_YOUR_API_KEY_HERE"
     ){
 
-        loading.style.display = "none";
+        loading.style.display =
+            "none";
 
-        error.style.display = "block";
+        error.style.display =
+            "block";
 
         error.innerHTML =
-            "⚠️ Please put your API-Football API key in the code.";
+            "⚠️ Put your API-Football API key in the code first.";
 
         return;
+
     }
 
 
     try{
 
-        const today = getToday();
+        const today =
+            getDate(0);
+
+        const tomorrow =
+            getDate(1);
 
 
         /*
-         * Get ALL matches scheduled for today.
+         * REQUEST 1
+         * LIVE WORLDWIDE
          */
 
-        const url =
-            API_URL +
-            "/fixtures?date=" +
-            today;
-
-
-        const response =
-            await fetch(
-                url,
-                {
-                    method:"GET",
-
-                    headers:{
-                        "x-apisports-key":API_KEY
-                    }
-                }
+        liveMatches =
+            await apiRequest(
+                "/fixtures?live=all"
             );
 
 
-        if(!response.ok){
+        /*
+         * REQUEST 2
+         * TODAY
+         */
 
-            throw new Error(
-                "HTTP Error " + response.status
+        todayMatches =
+            await apiRequest(
+                "/fixtures?date=" +
+                today +
+                "&timezone=Africa/Lagos"
             );
 
-        }
 
+        /*
+         * REQUEST 3
+         * TOMORROW
+         */
 
-        const data =
-            await response.json();
-
-
-        console.log("API RESPONSE:",data);
-
-
-        if(data.errors && Object.keys(data.errors).length > 0){
-
-            throw new Error(
-                JSON.stringify(data.errors)
+        tomorrowMatches =
+            await apiRequest(
+                "/fixtures?date=" +
+                tomorrow +
+                "&timezone=Africa/Lagos"
             );
 
-        }
 
-
-        allMatches =
-            data.response || [];
-
-
-        document.getElementById("lastUpdate").innerText =
+        document.getElementById(
+            "lastUpdate"
+        ).innerText =
             "Updated " +
-            new Date().toLocaleTimeString();
+            new Date()
+            .toLocaleTimeString();
 
 
-        loading.style.display = "none";
+        loading.style.display =
+            "none";
 
 
         displayMatches();
 
 
-    }catch(err){
+    }
 
-        console.log("ERROR:",err);
+    catch(errorObject){
+
+        console.log(
+            "API ERROR:",
+            errorObject
+        );
 
 
-        loading.style.display = "none";
+        loading.style.display =
+            "none";
 
-        error.style.display = "block";
+
+        error.style.display =
+            "block";
+
 
         error.innerHTML =
-            "❌ Could not load football matches.<br><br>" +
-            "Please check your API key and internet connection.<br><br>" +
-            "<small>" +
-            err.message +
-            "</small>";
+
+            "❌ API ERROR<br><br>" +
+
+            errorObject.message +
+
+            "<br><br>" +
+
+            "Check that your API key is valid and that your API-Football account has available requests.";
 
     }
 
 }
 
 
-/* =========================================================
-   CHECK LIVE MATCH
-   ========================================================= */
+/* =====================================================
+   LIVE
+===================================================== */
 
 function isLive(match){
 
@@ -531,20 +822,22 @@ function isLive(match){
 
 
     return [
+
         "1H",
         "2H",
         "HT",
         "ET",
         "P",
         "LIVE"
+
     ].includes(status);
 
 }
 
 
-/* =========================================================
-   CHECK FINISHED
-   ========================================================= */
+/* =====================================================
+   FINISHED
+===================================================== */
 
 function isFinished(match){
 
@@ -553,122 +846,193 @@ function isFinished(match){
 
 
     return [
+
         "FT",
         "AET",
         "PEN"
+
     ].includes(status);
 
 }
 
 
-/* =========================================================
-   CHECK UPCOMING
-   ========================================================= */
+/* =====================================================
+   UPCOMING
+===================================================== */
 
 function isUpcoming(match){
 
-    return !isLive(match) &&
-           !isFinished(match);
+    return !isLive(match)
+        &&
+        !isFinished(match);
 
 }
 
 
-/* =========================================================
-   DISPLAY MATCHES
-   ========================================================= */
+/* =====================================================
+   DISPLAY
+===================================================== */
 
 function displayMatches(){
 
     const container =
-        document.getElementById("matches");
+        document.getElementById(
+            "matches"
+        );
 
 
-    let matches =
-        [...allMatches];
+    let matches = [];
+
+    let title = "";
 
 
-    /* TAB FILTER */
+    /* =========================
+       LIVE
+    ========================= */
 
     if(currentTab === "live"){
 
         matches =
-            matches.filter(isLive);
+            liveMatches;
+
+        title =
+            "🔴 Live Matches";
 
     }
 
+
+    /* =========================
+       TODAY
+    ========================= */
+
+    else if(currentTab === "today"){
+
+        matches =
+            todayMatches;
+
+        title =
+            "📅 Today's Matches";
+
+    }
+
+
+    /* =========================
+       FINISHED
+    ========================= */
 
     else if(currentTab === "finished"){
 
         matches =
-            matches.filter(isFinished);
+            todayMatches.filter(
+                isFinished
+            );
+
+        title =
+            "✅ Finished Matches";
 
     }
 
+
+    /* =========================
+       UPCOMING
+    ========================= */
 
     else if(currentTab === "upcoming"){
 
+        const todayUpcoming =
+            todayMatches.filter(
+                isUpcoming
+            );
+
+
+        const tomorrowUpcoming =
+            tomorrowMatches.filter(
+                isUpcoming
+            );
+
+
         matches =
-            matches.filter(isUpcoming);
+            [
+                ...todayUpcoming,
+                ...tomorrowUpcoming
+            ];
+
+
+        title =
+            "🕐 Upcoming Matches";
 
     }
 
 
-    /* SEARCH */
+    /* REMOVE DUPLICATES */
 
-    const search =
-        document
-        .getElementById("search")
-        .value
-        .toLowerCase()
-        .trim();
+    const unique = [];
+
+    const ids = new Set();
 
 
-    if(search){
+    matches.forEach(match => {
 
-        matches =
-            matches.filter(match => {
+        const id =
+            match.fixture.id;
 
-                const home =
-                    (match.teams.home.name || "")
-                    .toLowerCase();
+        if(!ids.has(id)){
 
-                const away =
-                    (match.teams.away.name || "")
-                    .toLowerCase();
+            ids.add(id);
 
-                const league =
-                    (match.league.name || "")
-                    .toLowerCase();
+            unique.push(match);
 
-                return home.includes(search) ||
-                       away.includes(search) ||
-                       league.includes(search);
+        }
 
-            });
-
-    }
+    });
 
 
-    /* NO MATCHES */
+    matches = unique;
+
+
+    /* SORT BY TIME */
+
+    matches.sort(
+        (a,b) => {
+
+            return new Date(
+                a.fixture.date
+            ) -
+            new Date(
+                b.fixture.date
+            );
+
+        }
+    );
+
+
+    /* EMPTY */
 
     if(matches.length === 0){
 
-        let message = "";
+        let message =
+            "No matches found.";
+
 
         if(currentTab === "live"){
-            message = "No matches are live right now.";
+
+            message =
+                "No matches are live right now.";
+
         }
 
-        else if(currentTab === "finished"){
-            message = "No finished matches found today.";
+        if(currentTab === "finished"){
+
+            message =
+                "No finished matches found today.";
+
         }
 
-        else if(currentTab === "upcoming"){
-            message = "No upcoming matches found today.";
-        }
+        if(currentTab === "upcoming"){
 
-        else{
-            message = "No matches found today.";
+            message =
+                "No upcoming matches found.";
+
         }
 
 
@@ -693,62 +1057,38 @@ function displayMatches(){
     }
 
 
-    /* SORT */
-
-    matches.sort((a,b) => {
-
-        return new Date(
-            a.fixture.date
-        ) - new Date(
-            b.fixture.date
-        );
-
-    });
-
-
     /* TITLE */
-
-    let title = "Today's Matches";
-
-
-    if(currentTab === "live"){
-        title = "🔴 Live Matches";
-    }
-
-    else if(currentTab === "finished"){
-        title = "Finished Matches";
-    }
-
-    else if(currentTab === "upcoming"){
-        title = "Upcoming Matches";
-    }
-
 
     container.innerHTML = `
 
         <div class="section-title">
+
             ${title}
+
             (${matches.length})
+
         </div>
 
     `;
 
 
-    /* MATCH CARDS */
+    /* CARDS */
 
-    matches.forEach(match => {
+    matches.forEach(
+        match => {
 
-        container.innerHTML +=
-            createMatchCard(match);
+            container.innerHTML +=
+                createMatchCard(match);
 
-    });
+        }
+    );
 
 }
 
 
-/* =========================================================
-   CREATE MATCH CARD
-   ========================================================= */
+/* =====================================================
+   MATCH CARD
+===================================================== */
 
 function createMatchCard(match){
 
@@ -769,7 +1109,7 @@ function createMatchCard(match){
         fixture.status.short;
 
 
-    /* SCORES */
+    /* SCORE */
 
     const homeScore =
         goals.home !== null
@@ -783,7 +1123,7 @@ function createMatchCard(match){
         : "-";
 
 
-    /* STATUS TEXT */
+    /* STATUS */
 
     let statusText = "";
 
@@ -793,9 +1133,9 @@ function createMatchCard(match){
         if(status === "HT"){
 
             statusText =
-                '<span class="live-status">' +
-                '🔴 HALF TIME' +
-                '</span>';
+                `<span class="live">
+                    🔴 HALF TIME
+                </span>`;
 
         }
 
@@ -806,11 +1146,12 @@ function createMatchCard(match){
                 ? fixture.status.elapsed + "'"
                 : "LIVE";
 
+
             statusText =
-                '<span class="live-status">' +
-                '<span class="live-dot"></span>' +
-                minute +
-                '</span>';
+                `<span class="live">
+                    <span class="live-dot"></span>
+                    ${minute}
+                </span>`;
 
         }
 
@@ -828,12 +1169,14 @@ function createMatchCard(match){
     else{
 
         const date =
-            new Date(fixture.date);
+            new Date(
+                fixture.date
+            );
 
 
         statusText =
             date.toLocaleTimeString(
-                [],
+                "en-NG",
                 {
                     hour:"2-digit",
                     minute:"2-digit"
@@ -847,25 +1190,40 @@ function createMatchCard(match){
 
         <div class="match">
 
+
             <div class="league">
 
                 <img
                     class="league-logo"
-                    src="${league.logo || ""}"
-                    onerror="this.style.display='none'"
+
+                    src="${
+                        league.logo || ""
+                    }"
+
+                    onerror="
+                        this.style.display='none'
+                    "
                 >
+
 
                 <div class="league-name">
 
-                    ${league.name || "Football"}
+                    ${
+                        league.name ||
+                        "Football"
+                    }
 
-                    ${league.country
-                        ? " • " + league.country
-                        : ""}
+                    ${
+                        league.country
+                        ? " • " +
+                          league.country
+                        : ""
+                    }
 
                 </div>
 
             </div>
+
 
 
             <div class="match-row">
@@ -877,13 +1235,22 @@ function createMatchCard(match){
 
                     <img
                         class="team-logo"
-                        src="${teams.home.logo || ""}"
-                        onerror="this.style.display='none'"
+
+                        src="${
+                            teams.home.logo || ""
+                        }"
+
+                        onerror="
+                            this.style.display='none'
+                        "
                     >
 
-                    ${teams.home.name}
+                    ${
+                        teams.home.name
+                    }
 
                 </div>
+
 
 
                 <!-- SCORE -->
@@ -892,20 +1259,29 @@ function createMatchCard(match){
 
                     <div class="score">
 
-                        ${homeScore}
+                        ${
+                            homeScore
+                        }
+
                         -
-                        ${awayScore}
+
+                        ${
+                            awayScore
+                        }
 
                     </div>
 
 
-                    <div class="match-status">
+                    <div class="status">
 
-                        ${statusText}
+                        ${
+                            statusText
+                        }
 
                     </div>
 
                 </div>
+
 
 
                 <!-- AWAY -->
@@ -914,11 +1290,19 @@ function createMatchCard(match){
 
                     <img
                         class="team-logo"
-                        src="${teams.away.logo || ""}"
-                        onerror="this.style.display='none'"
+
+                        src="${
+                            teams.away.logo || ""
+                        }"
+
+                        onerror="
+                            this.style.display='none'
+                        "
                     >
 
-                    ${teams.away.name}
+                    ${
+                        teams.away.name
+                    }
 
                 </div>
 
@@ -932,25 +1316,35 @@ function createMatchCard(match){
 }
 
 
-/* =========================================================
-   CHANGE TAB
-   ========================================================= */
+/* =====================================================
+   TAB
+===================================================== */
 
-function changeTab(tab,button){
+function changeTab(
+    tab,
+    button
+){
 
-    currentTab = tab;
+    currentTab =
+        tab;
 
 
     document
         .querySelectorAll(".tab")
-        .forEach(btn => {
+        .forEach(
+            btn => {
 
-            btn.classList.remove("active");
+                btn.classList.remove(
+                    "active"
+                );
 
-        });
+            }
+        );
 
 
-    button.classList.add("active");
+    button.classList.add(
+        "active"
+    );
 
 
     displayMatches();
@@ -958,30 +1352,32 @@ function changeTab(tab,button){
 }
 
 
-/* =========================================================
+/* =====================================================
    AUTO REFRESH
-   ========================================================= */
+===================================================== */
+
+/*
+ * Refresh every 60 seconds.
+ *
+ * This is deliberately 60 seconds rather
+ * than 15 seconds to reduce API usage.
+ */
 
 setInterval(
-
-    function(){
-
-        loadMatches();
-
-    },
-
-    30000
-
+    loadAll,
+    60000
 );
 
 
-/* =========================================================
+/* =====================================================
    START
-   ========================================================= */
+===================================================== */
 
-loadMatches();
+loadAll();
+
 
 </script>
 
 </body>
+
 </html>
