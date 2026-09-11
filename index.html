@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Score App</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f2f5f9;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .score-card {
+      max-width: 680px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 2rem;
+      box-shadow: 0 20px 35px -8px rgba(0, 20, 40, 0.15);
+      padding: 2rem;
+    }
+
+    .match-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .league {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #4b5b6c;
+      background: #eef2f6;
+      padding: 0.45rem 1rem;
+      border-radius: 40px;
+    }
+
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #ffe9e9;
+      padding: 0.45rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #c62828;
+      text-transform: uppercase;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: #f44336;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(244, 67, 54, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); }
+    }
+
+    .score-area {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 1.2rem 0;
+    }
+
+    .team {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      width: 28%;
+      text-align: center;
+    }
+
+    .team-name {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #101d2c;
+    }
+
+    .team-sub {
+      font-size: 0.75rem;
+      color: #7c8b9c;
+      text-transform: uppercase;
+    }
+
+    .score-box {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #f8fafd;
+      padding: 0.8rem 1.6rem;
+      border-radius: 70px;
+      border: 1px solid #e9eef3;
+    }
+
+    .score-number {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #0a1a2b;
+      line-height: 1;
+    }
+
+    .score-sep {
+      font-size: 2.5rem;
+      color: #aab9c9;
+    }
+
+    .match-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #eef2f6;
+      padding-top: 1.5rem;
+      font-size: 0.9rem;
+      color: #556b7e;
+    }
+
+    .match-time {
+      font-weight: 600;
+      color: #1e3b5c;
+      background: #f3f7fb;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+    }
+
+    .loading {
+      text-align: center;
+      color: #7c8b9c;
+      padding: 2rem;
+    }
+
+    .error-msg {
+      background: #ffe9e9;
+      color: #c62828;
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 500px) {
+      .score-card { padding: 1.5rem; }
+      .score-number { font-size: 2.6rem; }
+      .team-name { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="score-card" id="app">
+    <div class="loading">Loading live scores...</div>
+  </div>
+
+  <script>
+    // ============================================================
+    // 👇 STEP 1: PASTE YOUR API KEY BELOW
+    //    Get a free trial key at https://www.thestatsapi.com
+    // ============================================================
+    const API_KEY = "YOUR_API_KEY_HERE";  // ← PASTE YOUR API KEY HERE
+
+
+    // ============================================================
+    // 👇 NO EDITS NEEDED BELOW THIS LINE
+    // ============================================================
+
+    const API_URL = "https://api.thestatsapi.com/api/football/matches?status=live";
+
+    async function fetchLiveScores() {
+      const app = document.getElementById('app');
+
+      // Check if the key was replaced
+      if (API_KEY === "YOUR_API_KEY_HERE" || !API_KEY) {
+        app.innerHTML = `<div class="error-msg">
+          Please paste your API key in the script tag where it says <code>YOUR_API_KEY_HERE</code>.
+        </div>`;
+        return;
+      }
+
+      try {
+        const response = await fetch(API_URL, {
+          headers: {
+            'Authorization': `Bearer ${API_KEY}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`API returned ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        if (!result.data || result.data.length === 0) {
+          app.innerHTML = `<div class="loading">No live matches right now.</div>`;
+          return;
+        }
+
+        // Show the first live match
+        const match = result.data[0];
+        renderMatch(match);
+
+        // Refresh every 30 seconds to keep score live
+        setTimeout(fetchLiveScores, 30000);
+
+      } catch (error) {
+        app.innerHTML = `<div class="error-msg">
+          Could not load scores: ${error.message}
+        </div>`;
+      }
+    }
+
+    function renderMatch(match) {
+      const app = document.getElementById('app');
+
+      const homeName = match.home?.name || "Home Team";
+      const awayName = match.away?.name || "Away Team";
+      const homeScore = match.home?.score ?? 0;
+      const awayScore = match.away?.score ?? 0;
+      const minute = match.minute ? `${match.minute}'` : "LIVE";
+      const competition = match.competition || "Live Match";
+
+      app.innerHTML = `
+        <div class="match-meta">
+          <div class="league">${competition}</div>
+          <div class="live-badge">
+            <span class="live-dot"></span>
+            Live
+          </div>
+        </div>
+
+        <div class="score-area">
+          <div class="team">
+            <div class="team-name">${homeName}</div>
+            <div class="team-sub">Home</div>
+          </div>
+
+          <div class="score-box">
+            <div class="score-number">${homeScore}</div>
+            <div class="score-sep">–</div>
+            <div class="score-number">${awayScore}</div>
+          </div>
+
+          <div class="team">
+            <div class="team-name">${awayName}</div>
+            <div class="team-sub">Away</div>
+          </div>
+        </div>
+
+        <div class="match-footer">
+          <div class="match-time">${minute}</div>
+        </div>
+      `;
+    }
+
+    // Start when page loads
+    fetchLiveScores();
+  </script>
+</body>
+</html>
